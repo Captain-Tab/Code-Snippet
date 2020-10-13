@@ -60,7 +60,7 @@
     };
 
     CallButton.onclick = () => {
-       render(2)
+        if (queue.length !== 0) { render(2) }
     };
 </script>
 </body>

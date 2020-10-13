@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List</title>
+</head>
+<body>
+    <p>链表是由一组不必相连(不必相连：可以连续也可以不连续)的内存结构-节点，按特定的顺序链接在一起的抽象数据类型</p>
+<script>
+    // 创建节点
+    const createNode = value => {
+        return {
+            data: value,
+            next: null
+        }
+    }
+    // 创建链表
+    const createList = value => {
+        return createNode(value)
+    }
+    // 在链表尾部添加节点
+    const appendList = (list, value) => {
+        const node = createNode(value)
+        let currentList = list
+        while (currentList.next) { // 如果发现next节点还存在的话，将x赋值给它的next，循环查找，直到找到最后的节点
+            currentList = currentList.next
+        }
+        currentList.next = node
+        return list
+    }
+    // 移除链表中的某个节点
+    const removeFromList = (list, value) => {
+        let currentList = list
+        let previousList
+
+        while ( currentList.data !== value && currentList.next !== null ) {
+            previousList = currentList
+            currentList = currentList.next
+        }
+
+        if(currentList.next === null) {
+            console.log('该节点不存在该列表')
+            return  false
+        }else if(currentList === list){
+            // 说明删除的是第一个节点, 返回节点的next
+            list = currentList.next
+            return list
+        }else {
+            previousList.next = currentList.next
+            return list
+        }
+    }
+    // 遍历链表，调用函数
+    const travelList = (list, fn) => {
+        let currentList = list
+        while (currentList !== null) {
+            fn(currentList)
+            currentList = currentList.next
+        }
+    }
+
+
+    const list = createList(10)
+    appendList(list, 20)
+    appendList(list, 30)
+    appendList(list,40)
+    removeFromList(list,30)
+    console.log(list)
+    travelList(list, (node)=>{
+        console.log(`链表中的data值为：${node.data}`)
+    })
+
+</script>
+</body>
+</html>
