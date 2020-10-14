@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tree</title>
+</head>
+<body>
+    <p>树是一种递归数据结构，包含一个或多个数据节点的集合，其中一个节点被指定为树的根，而其余节点被称为根的子节点</p>
+<script>
+    // 创建树
+    const createTree = value => {
+        return {
+            data: value,
+            children: null,
+            parent: null
+        }
+    }
+
+    // 添加子树
+    const addChild = (node, value) => {
+        const newNode = {
+            data: value,
+            children: null,
+            parent: node
+        }
+        node.children =  node.children || []
+        node.children.push(newNode)
+        return node
+    }
+
+    // 遍历节点，调用函数(递归)
+    const travel = (tree, fn) => {
+        fn(tree)
+        if(!tree.children) { return ''}
+        for(let i = 0; i < tree.children.length; i++) {
+            travel(tree.children[i], fn)
+        }
+    }
+
+    // 遍历节点，寻找对应的节点(递归）
+    const find = (tree, value) => {
+        let currentTree = tree
+        let result
+        if(currentTree.data === value) {
+            return currentTree
+        }
+        else if (currentTree.children){
+            for(let i = 0; i < currentTree.children.length; i++){
+                result = find(currentTree.children[i], value)
+                if(result) { return result}
+            }
+        }else {
+            console.log('找不到')
+            return undefined
+        }
+    }
+
+    // 移除子树节点
+    const removeNode = (tree, node) =>{
+        const findResult = find(tree, node)
+        if( findResult !== undefined) {
+            const siblings = findResult.parent.children
+            let index = -1
+            for(let i = 1; i < siblings.length; i++) {
+                if(siblings[i] === findResult ) {
+                    index = i
+                }
+            }
+            siblings.splice(index, 1)
+            return  tree
+        }else {
+            return  findResult
+        }
+    }
+
+    const tree = createTree(20)
+    addChild(tree, 30)
+    addChild(tree, 40)
+    addChild(tree, 50)
+    const result = find(tree, 20)
+    console.log('result', result)
+    // console.log(result)
+
+    // const fn = node => {
+    //     console.log(node.data)
+    // }
+    // find(tree, 50)
+    //
+    // removeNode(tree, 50)
+    // console.log(tree)
+
+</script>
+</body>
+</html>
