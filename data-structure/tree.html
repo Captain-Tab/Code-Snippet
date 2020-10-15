@@ -29,11 +29,11 @@
     }
 
     // 遍历节点，调用函数(递归)
-    const travel = (tree, fn) => {
+    const travelTree = (tree, fn) => {
         fn(tree)
         if(!tree.children) { return ''}
         for(let i = 0; i < tree.children.length; i++) {
-            travel(tree.children[i], fn)
+            travelTree(tree.children[i], fn)
         }
     }
 
@@ -42,34 +42,39 @@
         let currentTree = tree
         let result
         if(currentTree.data === value) {
-            return currentTree
-        }
-        else if (currentTree.children){
-            for(let i = 0; i < currentTree.children.length; i++){
-                result = find(currentTree.children[i], value)
-                if(result) { return result}
+            result = currentTree
+            return result
+        } else {
+            // 如果不是该节点，那么在该节点的子节点继续查找，递归
+            if(currentTree.children) {
+                for(let i = 0; i < currentTree.children.length; i++){
+                    result = find(currentTree.children[i], value)
+                    if(result) { return result}
+                }
             }
-        }else {
-            console.log('找不到')
-            return undefined
+            return result
         }
     }
 
     // 移除子树节点
     const removeNode = (tree, node) =>{
         const findResult = find(tree, node)
-        if( findResult !== undefined) {
+        if(findResult) {
+            if(findResult.parent === null) {
+                console.log('父节点被删除，返回空对象')
+                return {}
+            }
             const siblings = findResult.parent.children
-            let index = -1
-            for(let i = 1; i < siblings.length; i++) {
+            let index
+            for(let i = 0; i < siblings.length; i++) {
                 if(siblings[i] === findResult ) {
                     index = i
                 }
             }
             siblings.splice(index, 1)
-            return  tree
+            return tree
         }else {
-            return  findResult
+            return findResult
         }
     }
 
@@ -77,17 +82,18 @@
     addChild(tree, 30)
     addChild(tree, 40)
     addChild(tree, 50)
-    const result = find(tree, 20)
-    console.log('result', result)
-    // console.log(result)
 
-    // const fn = node => {
-    //     console.log(node.data)
-    // }
-    // find(tree, 50)
-    //
-    // removeNode(tree, 50)
-    // console.log(tree)
+    const fn = node => {
+        console.log(node.data)
+    }
+    travelTree(tree, fn)
+
+
+    const findResult = find(tree, 20)
+    console.log('搜索结果为', findResult)
+
+    const removeResult = removeNode(tree, 40)
+    console.log('移除节点的树为', removeResult)
 
 </script>
 </body>
