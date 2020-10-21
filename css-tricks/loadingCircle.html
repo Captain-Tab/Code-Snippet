@@ -3,9 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.3.1/build/styles/default.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.3.1/build/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <title>loadingCircle</title>
+    <style>
+        .inner {
+            background-color: rgb(242, 245, 149);
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .inner .spinner {
+            background-color: rgb(182, 226, 12);
+            width: 50px;
+            height: 100px;
+            transform-origin: right;
+            border-radius: 100px 0 0 100px;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            position: absolute;
+            animation: spin 2s infinite linear;
+        }
+        .inner .masker {
+            background-color: rgb(242, 245, 149);
+            width: 50px;
+            height: 100px;
+            top: 0;
+            position: absolute;
+            border-radius: 100px 0 0 100px;
+            z-index: 2;
+            animation: half-show 2s steps(1, end) infinite;
+        }
+        .inner .filler {
+            background-color: rgb(182, 226, 12);
+            width: 50px;
+            height: 100px;
+            top: 0;
+            right: 0;
+            position: absolute;
+            border-radius: 0 100px 100px 0;
+            z-index: 2;
+            animation: half-hide 2s steps(1, end) infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(360deg)}
+            100% { transform: rotate(0deg)}
+        }
+        @keyframes half-hide {
+            0% {opacity: 1}
+            50%, 100% {opacity: 0}
+        }
+        @keyframes half-show {
+            0% {opacity: 0}
+            50%, 100% {opacity: 1}
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div>
+        <h3>CSS3实现鸡蛋饼转转图(loading)</h3>
+    </div>
+    <a href="https://www.zhangxinxu.com/wordpress/2014/04/css3-pie-loading-waiting-animation/" target="_blank">点击查看详情</a>
+    <div class="inner">
+        <div class="spinner"></div>
+        <div class="masker"></div>
+        <div class="filler"></div>
+    </div>
+   <div>
+       <pre>
+           <code class="css">
+               .inner {
+                   background-color: rgb(242, 245, 149);
+                   width: 100px;
+                   height: 100px;
+                   top: 50%;
+                   left: 50%;
+                   position: absolute;
+                   border-radius: 50%;
+                   z-index: 0;
+               }
+               .inner .spinner {
+               background-color: rgb(182, 226, 12);
+               width: 50px;
+               height: 100px;
+               transform-origin: right;
+               border-radius: 100px 0 0 100px;
+               z-index: 1;
+               top: 0;
+               left: 0;
+               position: absolute;
+               animation: spin 2s infinite linear;
+               }
+               .inner .masker {
+               background-color: rgb(242, 245, 149);
+               width: 50px;
+               height: 100px;
+               top: 0;
+               position: absolute;
+               border-radius: 100px 0 0 100px;
+               z-index: 2;
+               animation: half-show 2s steps(1, end) infinite;
+               }
+               .inner .filler {
+               background-color: rgb(182, 226, 12);
+               width: 50px;
+               height: 100px;
+               top: 0;
+               right: 0;
+               position: absolute;
+               border-radius: 0 100px 100px 0;
+               z-index: 2;
+               animation: half-hide 2s steps(1, end) infinite;
+               }
+
+               @keyframes spin {
+               0% { transform: rotate(360deg)}
+               100% { transform: rotate(0deg)}
+               }
+               @keyframes half-hide {
+               0% {opacity: 1}
+               50%, 100% {opacity: 0}
+               }
+               @keyframes half-show {
+               0% {opacity: 0}
+               50%, 100% {opacity: 1}
+               }
+           </code>
+       </pre>
+   </div>
+
 </body>
 </html>
